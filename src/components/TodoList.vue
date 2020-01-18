@@ -1,19 +1,19 @@
 <template>
   <div class="main">
-    <Modal/>
     <form action="" @submit="addTodo">
-      <input class="input" type="text" v-model="newTodo">
-      <button type="submit" class="add-button">Add</button>
+      <TextBox class="input" type="text" v-model="newTodo"></TextBox>
+      <Button type="submit" @click="addTodo">Add</Button>
     </form>
     <ul>
-      <todo-item v-for="(todo, i) in list" :index="i"  :key="todo.id" :text="todo.text" :actions="actions"></todo-item>
+      <todo-item v-for="(todo, index) in list" :index="index"  :key="index" :text="todo.text" :actions="actions"></todo-item>
     </ul>
   </div>
 </template>
 
 <script>
-import TodoItem from './TodoItem'
-import Modal from './Modal'
+import TodoItem from './TodoItem';
+import EditTodo from './EditTodo';
+import { TextBox, Button } from './ui';
 
 
 export default {
@@ -33,9 +33,15 @@ export default {
         },
         {
           text: 'edit',
-          fn: () => {
+          fn: (index) => {
             this.$store.dispatch('openModal', {
-              title: 'Edit Something'
+              type: EditTodo,
+              data: {
+                index
+              },
+              config:{
+                title: 'Edit Something'
+              }
             });
           }
         }
@@ -43,8 +49,7 @@ export default {
     }
   },
   methods: {
-    addTodo(e) {
-      e.preventDefault();
+    addTodo() {
       this.$store.dispatch('addTodo', {
         id: this.newTodo,
         text: this.newTodo
@@ -59,7 +64,8 @@ export default {
   },
   components:{
     'todo-item': TodoItem,
-    Modal
+    TextBox,
+    Button
   }
 }
 </script>

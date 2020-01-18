@@ -1,5 +1,7 @@
 <template>
   <div id="app">
+    <Modal/>
+    <SnackBar/>
     <img alt="Vue logo" src="./assets/logo.png">
     <HelloWorld msg="Welcome to Your Vue.js App"/>
     <TodoList/>
@@ -9,12 +11,15 @@
 <script>
 import HelloWorld from './components/HelloWorld.vue';
 import TodoList from './components/TodoList.vue';
+import { Modal, SnackBar } from './components/ui';
 
 export default {
   name: 'app',
   components: {
     HelloWorld,
-    TodoList
+    TodoList,
+    Modal,
+    SnackBar
   }
 }
 </script>

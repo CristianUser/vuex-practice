@@ -7,6 +7,8 @@ export default new Vuex.Store({
   state: {
     todos: [],
     modal: {
+      data: null,
+      type: null,
       config: {
         title: ''
       },
@@ -31,15 +33,29 @@ export default new Vuex.Store({
     DELETE_TODO(state, { index }) {
       state.todos = state.todos.filter((val, i)=> i !== index);
     },
-    OPEN_MODAL(state, config) {
+    UPDATE_TODO(state, { index, text }) {
+      state.todos[index].text = text;
+    },
+    OPEN_MODAL(state, {config, data, type}) {
       state.modal = {
         visible: true,
-        config
+        config,
+        data,
+        type
       }
     },
     CLOSE_MODAL(state) {
       state.modal.visible = false;
     },
+    RESET_MODAL(state) {
+      state.modal = {
+        data: null,
+        type: null,
+        config: {
+          title: ''
+        }
+      }
+    }
   },
   actions: {
     addTodo({commit}, item) {
@@ -50,6 +66,10 @@ export default new Vuex.Store({
     },
     closeModal({commit}) {
       commit('CLOSE_MODAL');
+    },
+    updateTodoItem({commit}, payload) {
+      commit('CLOSE_MODAL', payload);
+      commit('RESET_MODAL');
     }
   }
 })

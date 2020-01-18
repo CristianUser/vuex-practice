@@ -4,15 +4,10 @@
   <div class="main">
     <div class="modal">
       <div class="modal-header">
-        <h3>{{config.title}}</h3>
+        <h3 class="modal-title">{{config.title}}</h3>
+        <button @click="closeModal" class="close-btn">X</button>
       </div>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.
-          Totam quidem quaerat tempora eaque laboriosam tenetur facilis
-          reiciendis pariatur? Odit possimus est accusantium vitae
-          laudantium quidem veniam adipisci ab cumque ratione.</p>
-        <div class="modal-footer">
-          <button @click="closeModal"> close</button>
-        </div>
+      <component :is="modal.type"></component>
       </div>
   </div>
   <div class="backdrop"></div>
@@ -41,6 +36,9 @@ export default {
     },
     config() {
       return this.$store.getters.modalConfig;
+    },
+    modal() {
+      return this.$store.state.modal;
     }
   }
 }
@@ -70,6 +68,16 @@ export default {
     border-bottom: solid #909090 1px;
     background-color: #f9f9f9;
 
+    .modal-title {
+      display: inline;
+    }
+    .close-btn {
+      position: absolute;
+      right: 30px;
+      top: 24px;
+      border: 0;
+      background-color: transparent;
+    }
   }
  }
 
